@@ -58,6 +58,30 @@ def test_guest_can_add_product_to_basket(browser, link):
     product_page.check_product_info()
 
 
+@pytest.mark.need_review
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+    # Переходит в корзину по кнопке в шапке
+    page.go_to_basket_page()
+    basket_page = BasketPage(browser, browser.current_url)
+    # Ожидаем, что в корзине нет товаров
+    basket_page.should_be_empty_basket()
+    # Ожидаем, что есть текст о том что корзина пуста
+    basket_page.should_be_empty_basket_message()
+
+
+@pytest.mark.need_review
+def test_guest_can_go_to_login_page_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.should_be_login_page()
+
+
 def test_guest_cant_see_success_message(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     product_page = ProductPage(browser, link)
@@ -73,16 +97,6 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page.should_be_login_link()
 
 
-@pytest.mark.need_review
-def test_guest_can_go_to_login_page_from_product_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
-    page = ProductPage(browser, link)
-    page.open()
-    page.go_to_login_page()
-    login_page = LoginPage(browser, browser.current_url)
-    login_page.should_be_login_page()
-
-
 def test_guest_can_go_to_login_page(browser):
     link = 'http://selenium1py.pythonanywhere.com'
     page = ProductPage(browser, link)
@@ -90,19 +104,6 @@ def test_guest_can_go_to_login_page(browser):
     page.go_to_login_page()
     login_page = LoginPage(browser, browser.current_url)
     login_page.should_be_login_page()
-
-
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
-    page = ProductPage(browser, link)
-    page.open()
-    # Переходит в корзину по кнопке в шапке
-    page.go_to_basket_page()
-    basket_page = BasketPage(browser, browser.current_url)
-    # Ожидаем, что в корзине нет товаров
-    basket_page.should_be_empty_basket()
-    # Ожидаем, что есть текст о том что корзина пуста
-    basket_page.should_be_empty_basket_message()
 
 
 @pytest.mark.need_review
