@@ -106,7 +106,6 @@ def test_guest_can_go_to_login_page(browser):
     login_page.should_be_login_page()
 
 
-@pytest.mark.need_review
 @pytest.mark.xfail()
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
